@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Engineering Economy — Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,650&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF2F5;--grid:#DCE4EB;--surface:#FFFFFF;--ink:#1B2A41;--muted:#5B6B80;
+  --rule:#C9D3DD;--in:#1F7A6D;--out:#B23A48;--find:#C98A0E;--findbg:#FFF4D9;--accent:#2D5D8A;--accentbg:#E3ECF5;
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#121B26;--grid:#1A2533;--surface:#18222F;--ink:#E4EBF2;--muted:#9AA9BA;
+  --rule:#2B394A;--in:#4CC1AE;--out:#F07A88;--find:#F2B84B;--findbg:#33290F;--accent:#8AB7E3;--accentbg:#1E3047;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --paper:#121B26;--grid:#1A2533;--surface:#18222F;--ink:#E4EBF2;--muted:#9AA9BA;
+  --rule:#2B394A;--in:#4CC1AE;--out:#F07A88;--find:#F2B84B;--findbg:#33290F;--accent:#8AB7E3;--accentbg:#1E3047;color-scheme:dark;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:650;line-height:1.2;margin:0}
+h1{font-size:2.4rem}h2{font-size:1.6rem;margin:2.2rem 0 .6rem}h3{font-size:1.2rem;margin:1.4rem 0 .4rem}
+p{margin:.5rem 0 .9rem}
+a{color:var(--accent)}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+nav.side{position:sticky;top:0;height:100vh;overflow:auto;background:var(--surface);border-right:1px solid var(--rule);padding:1.4rem 1rem}
+.brand{font-family:"Newsreader",Georgia,serif;font-size:1.25rem;font-weight:650;line-height:1.2;margin-bottom:1.2rem}
+.brand small{display:block;font-family:"IBM Plex Sans",sans-serif;font-weight:400;font-size:.8rem;color:var(--muted);margin-top:.2rem}
+nav.side .group{font-size:.8rem;color:var(--muted);margin:1.1rem 0 .3rem .6rem}
+nav.side a{display:block;padding:.45rem .6rem;border-radius:6px;text-decoration:none;color:var(--ink);font-size:.95rem}
+nav.side a:hover{background:var(--accentbg)}
+nav.side a[aria-current="page"]{background:var(--accent);color:var(--surface)}
+main{padding:2.4rem clamp(1rem,4vw,3.5rem) 5rem;min-width:0}
+.view{max-width:820px}
+.lede{font-size:1.1rem;color:var(--muted);max-width:68ch}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1.1rem 1.25rem;margin:1rem 0}
+.analogy{border-left:3px solid var(--accent);background:var(--accentbg);padding:.7rem 1rem;border-radius:0 8px 8px 0;margin:1rem 0}
+.formula{font-family:"Newsreader",Georgia,serif;font-size:1.15rem;background:var(--surface);border:1px dashed var(--rule);border-radius:8px;padding:.6rem 1rem;display:inline-block;margin:.3rem 0}
+.scroll{overflow-x:auto;margin:.8rem 0}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;background:var(--surface);font-size:.92rem}
+th,td{border:1px solid var(--rule);padding:.45rem .6rem;text-align:left;vertical-align:top}
+th{background:var(--accentbg);font-weight:600}
+td.num,th.num{text-align:right}
+ul,ol{padding-left:1.3rem}li{margin:.25rem 0}
+.chip{font:inherit;font-size:.9rem;font-variant-numeric:tabular-nums;border:1px solid var(--find);background:var(--findbg);color:var(--ink);border-radius:6px;padding:.05rem .45rem;cursor:pointer;white-space:nowrap}
+.chip:hover{box-shadow:0 0 0 1px var(--find)}
+button,select,input{font:inherit;color:var(--ink)}
+.btn{background:var(--accent);color:var(--surface);border:0;border-radius:6px;padding:.45rem .9rem;cursor:pointer;font-weight:500}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+:focus-visible{outline:3px solid var(--find);outline-offset:2px}
+.problem{background:var(--surface);border:1px solid var(--rule);border-radius:12px;margin:1.6rem 0;overflow:hidden}
+.problem header{display:flex;gap:.9rem;align-items:baseline;padding:1rem 1.2rem .3rem}
+.qnum{font-family:"Newsreader",Georgia,serif;font-size:2rem;font-weight:650;color:var(--accent);line-height:1}
+.problem .stmt{padding:0 1.2rem;margin:0}
+.cfd{padding:.4rem 1.2rem}
+.cfd svg{width:100%;height:auto;display:block}
+.sol{border-top:1px solid var(--rule);padding:.6rem 1.2rem 1.1rem}
+.sol[hidden]{display:none}
+.toggle{margin:0 1.2rem 1rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:.4rem 0}
+.steps>li{counter-increment:s;position:relative;padding-left:2rem;margin:.7rem 0}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:.1rem;width:1.45rem;height:1.45rem;border-radius:50%;background:var(--accent);color:var(--surface);font-size:.8rem;display:grid;place-items:center;font-weight:600}
+.answer{background:var(--findbg);border:1px solid var(--find);border-radius:8px;padding:.6rem .9rem;margin-top:.8rem;font-weight:500}
+.alt{font-size:.92rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-size:.85rem;color:var(--muted);margin:.4rem 0}
+.legend span::before{content:"";display:inline-block;width:14px;height:3px;margin-right:.35rem;vertical-align:middle;background:currentColor}
+.lg-in{color:var(--in)}.lg-out{color:var(--out)}.lg-find{color:var(--find)}
+.form{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;align-items:end}
+.form label{display:flex;flex-direction:column;font-size:.85rem;color:var(--muted);gap:.2rem}
+.form input,.form select{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:.4rem .5rem;min-width:7rem}
+.big{font-family:"Newsreader",Georgia,serif;font-size:2.2rem;font-weight:650;font-variant-numeric:tabular-nums}
+.tabrow td.hit{background:var(--findbg);outline:2px solid var(--find);outline-offset:-2px;font-weight:600}
+.note{font-size:.9rem;color:var(--muted)}
+.toolbar{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}
+.mobilebar{display:none}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}
+  nav.side{position:fixed;inset:0 auto 0 0;width:min(290px,85vw);transform:translateX(-100%);transition:transform .2s;z-index:20;padding-top:calc(1.4rem + env(safe-area-inset-top,0px))}
+  nav.side.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}
+  .mobilebar{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:10;align-items:center;gap:.8rem;background:var(--surface);border-bottom:1px solid var(--rule);padding:.6rem 1rem}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+  main{padding-top:1.4rem}
+  h1{font-size:1.9rem}
+}
+@media (prefers-reduced-motion:reduce){nav.side{transition:none}}
+</style>
+</head>
+<body>
+<div class="mobilebar"><button class="btn ghost" id="menuBtn" aria-controls="side" aria-expanded="false">Menu</button><strong id="mobileTitle">Engineering Economy</strong></div>
+<div class="layout">
+<nav class="side" id="side" aria-label="Sections">
+  <div class="brand">Engineering Economy<small>Chapters 1–3 and tutorial sheets</small></div>
+  <div class="group">Chapters</div>
+  <a href="#ch1">1. Introduction</a>
+  <a href="#ch2">2. Cost accounting</a>
+  <a href="#ch3">3. Time value of money</a>
+  <div class="group">Tools</div>
+  <a href="#tables">Using the interest tables</a>
+  <div class="group">Solution manual</div>
+  <a href="#sheet1">Sheet 1 · Q1–Q5</a>
+  <a href="#sheet2">Sheet 2 · Q1, 4, 6, 8, 10</a>
+</nav>
+<main id="main">
+
+<section class="view" id="v-ch1" data-title="1. Introduction">
+<h1>Choosing the best course of action</h1>
+<p class="lede">Engineering economy is a toolkit for one question: of the projects or options on the table, which one is worth doing? The answer is only as good as the data behind it.</p>
+
+<h2>Who is deciding changes what “best” means</h2>
+<div class="scroll"><table>
+<tr><th>Focus</th><th>Main driver</th><th>Typical measure</th></tr>
+<tr><td>Business / corporation</td><td>Profit</td><td>Money: present worth, annual worth, rate of return (most of this course)</td></tr>
+<tr><td>Government and non‑profit</td><td>Service to the public</td><td>Benefit‑cost ratio; several criteria, harder to evaluate, no taxes</td></tr>
+</table></div>
+
+<h2>Forms of business organization</h2>
+<div class="scroll"><table>
+<tr><th>Form</th><th>Owners</th><th>Advantages</th><th>Disadvantages</th><th>Liability</th></tr>
+<tr><td>Individual</td><td>One</td><td>Full control, keeps all profit</td><td>Limited capital</td><td>Owner is responsible for everything the business owes</td></tr>
+<tr><td>Partnership</td><td>Two or more</td><td>More capital; profits split by agreement (e.g. 40/60)</td><td>Losses shared too</td><td>Shared between partners</td></tr>
+<tr><td>Corporation</td><td>Shareholders (public can buy shares)</td><td>Raises capital easily; limited liability; run by hired managers and a board</td><td>Pressure for short‑term results (quarterly profit)</td><td>Limited to the value of shares held: own $500 of stock, you can lose at most $500</td></tr>
+</table></div>
+
+<h2>How to choose</h2>
+<p>Every decision has three parts: the <strong>focus</strong>, the <strong>list of alternatives</strong>, and a definition of <strong>“best”</strong>. The focus usually defines “best”.</p>
+<div class="analogy">Getting to class: walk, bus, or car. If “best” means cheapest, you walk. If it means fastest, you drive. Same alternatives, different answer, because “best” changed.</div>
+
+<h3>Multi‑factor problems</h3>
+<p>Real decisions mix <strong>monetary factors</strong> (easy to put in dollars) with <strong>non‑monetary or intangible</strong> ones (weather, safety, prestige). Two problems appear immediately: how to weight them, and how to compare different units.</p>
+<div class="panel">
+<strong>Floor cleaning machine.</strong> Machine A costs $23,500/year with safety 7/10. Machine B costs $28,400/year with safety 8.5/10. A business that uses one criterion, cost, picks A. That simplicity is why this course works mostly with money.
+</div>
+</section>
+
+<section class="view" id="v-ch2" data-title="2. Cost accounting" hidden>
+<h1>Where the cost of a product comes from</h1>
+<p class="lede">Before comparing projects you need to know what things cost. Cost accounting splits a product’s cost into pieces you can trace, plus a pool of shared costs you spread out fairly.</p>
+
+<h2>The three building blocks</h2>
+<div class="formula">Total cost = Direct material + Direct labor + Overhead</div>
+<p>This works per year or per unit.</p>
+<div class="analogy">Baking a cake to sell: flour and eggs are direct material, the baker’s hours are direct labor, and the oven’s electricity, the shop rent and the cashier are overhead. You can’t point at a slice and say how much rent is “in” it, so you need a rule to share it out.</div>
+<div class="scroll"><table>
+<tr><th>Category</th><th>What it is</th><th>Examples</th></tr>
+<tr><td>Direct material (DM)</td><td>Principal materials that end up in the product. Small items (glue, screws) go to overhead.</td><td>Wood for a table</td></tr>
+<tr><td>Direct labor (DL)</td><td>Labor charged directly to the product</td><td>Wages, overtime, social security tax, vacation pay, health and life insurance, pension</td></tr>
+<tr><td>Overhead (OH, indirect)</td><td>Every production expense that isn’t DM or DL</td><td>Depreciation, maintenance, taxes, insurance, rent, interest on capital, sales, admin, research</td></tr>
+</table></div>
+
+<h2>Allocating overhead</h2>
+<p>Pick a resource every product uses (DM dollars, DL dollars, labor hours, machine hours, floor area…), then prorate:</p>
+<div class="formula">OH rate = Total OH ÷ Total of chosen base</div><br>
+<div class="formula">OH per unit = OH rate × base used by one unit</div>
+<div class="panel">
+<strong>Furniture company.</strong> Total OH = $527,165, total DM = $328,500 → rate = $1.60 per $1 of DM.<br>
+Table: DM 40, DL 55, OH = 40 × 1.60 = 64 → TC = $159. Sold at $189 → profit = 189 − 159 = <strong>$30 per table</strong> (the slide prints $40, but the subtraction gives $30).
+</div>
+
+<h3>The five methods, live (PLASCO example)</h3>
+<p>Total overhead = $97,460. Worker W1 runs machine X at $9/hr, W2 runs machine Y at $7/hr, 2000 hr/year each. Pick a method:</p>
+<div class="panel">
+<div class="form"><label>Method<select id="ohMethod">
+<option value="dl">1. Direct labor cost</option>
+<option value="dm">2. Direct material cost</option>
+<option value="comp">3. Composite (DL + DM)</option>
+<option value="hr">4. Direct labor hour</option>
+<option value="mach">5. Machine rate</option>
+</select></label></div>
+<p id="ohRate" class="note" style="margin-top:.8rem"></p>
+<div class="scroll"><table id="ohTable"></table></div>
+<p class="note">Values from the formula; the slides round the rate first (e.g. 3.05), so a third decimal may differ.</p>
+</div>
+
+<h2>Fixed, variable, and break‑even</h2>
+<p>Another way to split cost: <strong>fixed</strong> F (doesn’t change with output, like rent) and <strong>variable</strong> V per unit (material per unit). For n units:</p>
+<div class="formula">TC = F + nV  ·  TR = n × price  ·  Break‑even n* = F ÷ (price − V)</div>
+<div class="panel">
+<div class="form">
+<label>Fixed cost F<input type="number" id="beF" value="546"></label>
+<label>Variable cost V / unit<input type="number" id="beV" value="12.75" step="0.01"></label>
+<label>Price / unit<input type="number" id="beP" value="50" step="0.01"></label>
+</div>
+<p id="beOut" style="margin-top:.8rem"></p>
+<svg id="beSvg" viewBox="0 0 520 220" role="img" aria-label="Break-even chart"></svg>
+<p class="note">Defaults are the seminar example. Try F = 10,000, V = 10, price = 15 → 2000 units.</p>
+</div>
+
+<h2>Cost terms to know</h2>
+<div class="scroll"><table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td>Recurring</td><td>Repeats every period: utilities, labor (O&amp;M costs)</td></tr>
+<tr><td>Non‑recurring</td><td>One‑time: buying a $35,000 molding machine. Kept separate mainly for taxes.</td></tr>
+<tr><td>Sunk cost</td><td>Already spent and unrecoverable. Ignore it when deciding.</td></tr>
+<tr><td>Opportunity cost</td><td>What you give up by not using a resource elsewhere. For money, this is why interest matters.</td></tr>
+<tr><td>Life‑cycle cost</td><td>Total cost from start to abandonment</td></tr>
+<tr><td>Incremental cost</td><td>Δcost ÷ Δoutput: the cost of making one more batch</td></tr>
+<tr><td>Consumer vs producer goods</td><td>Used directly by people vs used to make other goods and services</td></tr>
+</table></div>
+<div class="panel"><strong>Make vs buy.</strong> Making 576 units: DL 120 + DM 86.4 + OH 82 = $288.40. Vendor: 576 × 0.35 = $201.60. Buying saves $86.80 per day.</div>
+</section>
+
+<section class="view" id="v-ch3" data-title="3. Time value of money" hidden>
+<h1>A pound today is not a pound next year</h1>
+<p class="lede">Interest raises the value of money over time; inflation lowers what it can buy (handled separately). Everything in this chapter is about moving money along a timeline so amounts at different times can be compared.</p>
+
+<h2>Simple vs compound interest</h2>
+<p><strong>Simple:</strong> interest only on the principal. I = P·i·N. $2,000 at 12% for 5 years → I = 1,200, total 3,200.</p>
+<p><strong>Compound:</strong> interest on principal and on past interest. Always assume compound unless told otherwise.</p>
+<div class="scroll"><table style="max-width:460px">
+<tr><th>Year</th><th class="num">Start</th><th class="num">Interest 10%</th><th class="num">End</th></tr>
+<tr><td>1</td><td class="num">1,000</td><td class="num">100</td><td class="num">1,100</td></tr>
+<tr><td>2</td><td class="num">1,100</td><td class="num">110</td><td class="num">1,210</td></tr>
+<tr><td>3</td><td class="num">1,210</td><td class="num">121</td><td class="num">1,331</td></tr>
+</table></div>
+<div class="analogy">Compound interest is a snowball: each turn it picks up snow in proportion to its current size, not its original size.</div>
+
+<h2>Cash flow diagrams</h2>
+<p>Horizontal line = time (0 = now). Arrows up = money in, arrows down = money out. All cash flows happen at the <strong>end</strong> of a period. Draw one for every problem before writing any formula.</p>
+<div class="cfd" id="demoCfd"></div>
+<div class="legend"><span class="lg-in">Cash in</span><span class="lg-out">Cash out</span><span class="lg-find">Unknown you solve for</span></div>
+
+<h2>Notation</h2>
+<div class="scroll"><table>
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>P</td><td>Present worth, at time 0</td></tr>
+<tr><td>F</td><td>Future worth, at the end of year n</td></tr>
+<tr><td>A</td><td>Equal end‑of‑period amount, every period from 1 to n, no gaps</td></tr>
+<tr><td>G</td><td>Constant increase (or decrease) per period: arithmetic gradient</td></tr>
+<tr><td>i, n</td><td>Interest rate per period, number of periods</td></tr>
+</table></div>
+
+<h2>The factors</h2>
+<p>Read <strong>(F/P, i, n)</strong> as “find F, given P”. The letters cancel like units: P × (F/P) = F.</p>
+<div class="analogy">Think of a factor as an exchange rate between two points in time. (F/P, 8%, 24) = 6.341 means “1 pound today trades for 6.341 pounds in year 24”, just as an exchange rate converts EGP to USD.</div>
+<div class="scroll"><table>
+<tr><th>Find</th><th>Given</th><th>Factor</th><th>Formula</th><th>Name</th></tr>
+<tr><td>F</td><td>P</td><td>(F/P, i, n)</td><td>(1+i)<sup>n</sup></td><td>Single payment compound amount</td></tr>
+<tr><td>P</td><td>F</td><td>(P/F, i, n)</td><td>1 / (1+i)<sup>n</sup></td><td>Single payment present worth</td></tr>
+<tr><td>F</td><td>A</td><td>(F/A, i, n)</td><td>[(1+i)<sup>n</sup> − 1] / i</td><td>Uniform series compound amount</td></tr>
+<tr><td>A</td><td>F</td><td>(A/F, i, n)</td><td>i / [(1+i)<sup>n</sup> − 1]</td><td>Sinking fund</td></tr>
+<tr><td>P</td><td>A</td><td>(P/A, i, n)</td><td>[(1+i)<sup>n</sup> − 1] / [i(1+i)<sup>n</sup>]</td><td>Uniform series present worth</td></tr>
+<tr><td>A</td><td>P</td><td>(A/P, i, n)</td><td>i(1+i)<sup>n</sup> / [(1+i)<sup>n</sup> − 1]</td><td>Capital recovery</td></tr>
+<tr><td>A</td><td>G</td><td>(A/G, i, n)</td><td>1/i − n / [(1+i)<sup>n</sup> − 1]</td><td>Gradient uniform series</td></tr>
+<tr><td>P</td><td>G</td><td>(P/G, i, n)</td><td>[(1+i)<sup>n</sup> − in − 1] / [i²(1+i)<sup>n</sup>]</td><td>Gradient present worth</td></tr>
+</table></div>
+
+<h3>Where the series factors drop their result</h3>
+<ul>
+<li><strong>P from a series</strong> lands one period <em>before</em> the first A.</li>
+<li><strong>F from a series</strong> lands <em>on</em> the last A.</li>
+<li>If a series doesn’t start at year 1, move it in two steps: series → single amount → wherever you need it. This is the trick behind most sheet problems.</li>
+</ul>
+
+<h2>Recipe for any problem</h2>
+<ol class="steps">
+<li>Read the problem and draw the cash flow diagram.</li>
+<li>Label what you know and what you want using only P, F, A (and G).</li>
+<li>Pick a common point in time. Two cash flow sets are <em>equivalent</em> if their values are equal at the same point.</li>
+<li>Write the equation with factors, look each one up in the tables, and solve. Split the diagram into simple pieces and add them if needed.</li>
+</ol>
+
+<h2>Slide examples, solved</h2>
+<div class="scroll"><table>
+<tr><th>Example</th><th>Setup</th><th class="num">Answer</th></tr>
+<tr><td>$500 today, 5%, 4 years</td><td>F = 500 <button class="chip" data-f="FP" data-i="5" data-n="4">(F/P,5%,4) = 1.216</button></td><td class="num">$608</td></tr>
+<tr><td>$800 today + $400 at year 2, 8%, F at year 6</td><td>800 <button class="chip" data-f="FP" data-i="8" data-n="6">(F/P,8%,6) = 1.587</button> + 400 <button class="chip" data-f="FP" data-i="8" data-n="4">(F/P,8%,4) = 1.360</button></td><td class="num">$1,813.60</td></tr>
+<tr><td>Withdraw $500 at year 3, 6%</td><td>P = 500 <button class="chip" data-f="PF" data-i="6" data-n="3">(P/F,6%,3) = .8396</button></td><td class="num">$419.80</td></tr>
+<tr><td>Rate making $200 now = $268 at year 6</td><td>(F/P,i,6) = 268/200 = 1.340 → table 5% row 6 shows 1.340</td><td class="num">i = 5%</td></tr>
+<tr><td>$500/yr for 10 years, 6%</td><td>F = 500 <button class="chip" data-f="FA" data-i="6" data-n="10">(F/A,6%,10) = 13.181</button></td><td class="num">$6,590.50</td></tr>
+<tr><td>$250/yr for 6 yrs, 8%, F at year 8</td><td>250 <button class="chip" data-f="FA" data-i="8" data-n="6">(F/A,8%,6) = 7.336</button> <button class="chip" data-f="FP" data-i="8" data-n="2">(F/P,8%,2) = 1.166</button></td><td class="num">$2,138.40</td></tr>
+<tr><td>Withdraw $500/yr for 6 yrs, 5%</td><td>P = 500 <button class="chip" data-f="PA" data-i="5" data-n="6">(P/A,5%,6) = 5.076</button></td><td class="num">$2,538</td></tr>
+<tr><td>$60,000 at t=6, six deposits t=0…5, 6%</td><td>Series F lands at t=5, move 1 yr: A <button class="chip" data-f="FA" data-i="6" data-n="6">(F/A,6%,6) = 6.975</button> <button class="chip" data-f="FP" data-i="6" data-n="1">(F/P,6%,1) = 1.060</button> = 60,000</td><td class="num">A = $8,115</td></tr>
+<tr><td>4 × $800 (t=4…7) ≡ 7 × A (t=2…8), 8%</td><td>At t=0: 800 <button class="chip" data-f="PA" data-i="8" data-n="4">(P/A,8%,4) = 3.312</button> <button class="chip" data-f="PF" data-i="8" data-n="3">(P/F,8%,3) = .7938</button> = A <button class="chip" data-f="PA" data-i="8" data-n="7">(P/A,8%,7) = 5.206</button> <button class="chip" data-f="PF" data-i="8" data-n="1">(P/F,8%,1) = .9259</button></td><td class="num">A ≈ $436</td></tr>
+<tr><td>$10,000 at 17th birthday, deposits from 3rd, 10%</td><td>A = 10,000 <button class="chip" data-f="AF" data-i="10" data-n="15">(A/F,10%,15) = .0315</button></td><td class="num">$315</td></tr>
+<tr><td>Withdraw $1,000/yr for 10 yrs, 10%</td><td>P = 1,000 <button class="chip" data-f="PA" data-i="10" data-n="10">(P/A,10%,10) = 6.145</button></td><td class="num">$6,145</td></tr>
+<tr><td>Loan $300,000, 12%, 35 yrs</td><td>A = 300,000 <button class="chip" data-f="AP" data-i="12" data-n="35">(A/P,12%,35) = .1223</button></td><td class="num">$36,690/yr</td></tr>
+</table></div>
+<p class="note">Tap any highlighted factor to see exactly where it sits in the tables.</p>
+</section>
+
+<section class="view" id="v-tables" data-title="Using the interest tables" hidden>
+<h1>Reading the compound interest tables</h1>
+<p class="lede">Each page of Appendix B is one interest rate. Every row is a number of periods n. Every column is one factor. Find three things and you have your number.</p>
+
+<h2>The three‑step lookup</h2>
+<ol class="steps">
+<li><strong>Find the page</strong> for your interest rate i, printed at the top (e.g. “8% Compound Interest Factors”).</li>
+<li><strong>Find the row</strong> for n in the left (or right) column.</li>
+<li><strong>Find the column</strong> for the factor. Columns are grouped: Single Payment (F/P, P/F), Uniform Payment Series (A/F, A/P, F/A, P/A), Arithmetic Gradient (A/G, P/G). Each header also says it in words: “Find F Given P”.</li>
+</ol>
+
+<h2>Factor finder</h2>
+<p>This rebuilds the table row for any i and n, highlights the cell, and interpolates when the rate isn’t printed.</p>
+<div class="panel">
+<div class="form">
+<label>Factor<select id="fFactor">
+<option value="FP">F/P · find F given P</option><option value="PF">P/F · find P given F</option>
+<option value="AF">A/F · find A given F</option><option value="AP">A/P · find A given P</option>
+<option value="FA">F/A · find F given A</option><option value="PA">P/A · find P given A</option>
+<option value="AG">A/G · find A given G</option><option value="PG">P/G · find P given G</option>
+</select></label>
+<label>Interest rate i (%)<input type="number" id="fI" value="8" step="0.25" min="0.25"></label>
+<label>Periods n<input type="number" id="fN" value="24" step="1" min="1"></label>
+</div>
+<div id="fOut" style="margin-top:1rem"></div>
+</div>
+
+<h2>When the rate isn’t in the tables: interpolate</h2>
+<p>Sheet 1 uses 16%, 14% and 5.5%, none of which have a page. Take the two closest printed rates and assume a straight line between them.</p>
+<div class="formula">factor ≈ f<sub>low</sub> + (i − i<sub>low</sub>) / (i<sub>high</sub> − i<sub>low</sub>) × (f<sub>high</sub> − f<sub>low</sub>)</div>
+<div class="analogy">It’s like reading a ruler between two marks: if 16 sits one‑third of the way from 15 to 18, the factor sits one‑third of the way between their two values. The real curve bends slightly, so the result is close but not exact; the formula gives the exact value.</div>
+<p>The same idea works in reverse when you’re solving for i (Sheet 2 Q10): find the factor value you need, see which two rates bracket it, and interpolate for i.</p>
+
+<h2>Quick checks that catch mistakes</h2>
+<ul>
+<li>(P/F) = 1 ÷ (F/P), (P/A) = 1 ÷ (A/P), (F/A) = 1 ÷ (A/F)</li>
+<li>(A/P) = (A/F) + i. At 10%, n=10: .1627 = .0627 + .10</li>
+<li>F/P and F/A are always above 1 (for n ≥ 1). P/F is always below 1. If a present value comes out bigger than the future amount, a factor is upside down.</li>
+<li>For very long horizons (n → ∞): (P/A) = 1/i, (A/P) = i, (P/G) = 1/i², (A/G) = 1/i.</li>
+<li>Small differences between the table and the formula (like 76,092 vs 76,094) are just rounding in the table. Both are accepted.</li>
+</ul>
+</section>
+
+<section class="view" id="v-sheet1" data-title="Sheet 1" hidden>
+<h1>Sheet 1 solution manual</h1>
+<p class="lede">Each problem: diagram first, then the factor equation, the table lookup, and a formula check. Try it yourself, then open the solution.</p>
+<div class="legend"><span class="lg-in">Cash in / given</span><span class="lg-out">Cash out / given</span><span class="lg-find">Unknown</span></div>
+<div class="toolbar"><button class="btn ghost" data-showall="sheet1">Show all solutions</button></div>
+<div id="sheet1List"></div>
+</section>
+
+<section class="view" id="v-sheet2" data-title="Sheet 2" hidden>
+<h1>Sheet 2 solution manual · Q1, 4, 6, 8, 10</h1>
+<p class="lede">These mix several cash flows. The trick every time: move each piece to one common year, add, then convert.</p>
+<div class="legend"><span class="lg-in">Cash in / given</span><span class="lg-out">Cash out / given</span><span class="lg-find">Unknown</span></div>
+<div class="toolbar"><button class="btn ghost" data-showall="sheet2">Show all solutions</button></div>
+<div id="sheet2List"></div>
+</section>
+
+</main>
+</div>
+
+<script>
+const F={
+  FP:(i,n)=>Math.pow(1+i,n),
+  PF:(i,n)=>Math.pow(1+i,-n),
+  AF:(i,n)=>i/(Math.pow(1+i,n)-1),
+  AP:(i,n)=>i*Math.pow(1+i,n)/(Math.pow(1+i,n)-1),
+  FA:(i,n)=>(Math.pow(1+i,n)-1)/i,
+  PA:(i,n)=>(Math.pow(1+i,n)-1)/(i*Math.pow(1+i,n)),
+  AG:(i,n)=>1/i-n/(Math.pow(1+i,n)-1),
+  PG:(i,n)=>(Math.pow(1+i,n)-i*n-1)/(i*i*Math.pow(1+i,n))
+};
+const ORDER=["FP","PF","AF","AP","FA","PA","AG","PG"];
+const NAME={FP:"F/P",PF:"P/F",AF:"A/F",AP:"A/P",FA:"F/A",PA:"P/A",AG:"A/G",PG:"P/G"};
+const FORM={FP:"(1+i)ⁿ",PF:"1/(1+i)ⁿ",AF:"i/[(1+i)ⁿ−1]",AP:"i(1+i)ⁿ/[(1+i)ⁿ−1]",FA:"[(1+i)ⁿ−1]/i",PA:"[(1+i)ⁿ−1]/[i(1+i)ⁿ]",AG:"1/i − n/[(1+i)ⁿ−1]",PG:"[(1+i)ⁿ−in−1]/[i²(1+i)ⁿ]"};
+const RATES=[0.25,0.5,0.75,1,1.25,1.5,1.75,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10,12,15,18,20,25,30,35,40,45,50,60];
+const N_LOW=[...Array(30).keys()].map(k=>k+1).concat([36,40,48,50,52,60,70,72,80,84,90,96,100,104,120,240,360,480]);
+const N_HIGH=[...Array(35).keys()].map(k=>k+1).concat([40,45,50,55,60,65,70,75,80,85,90,95,100]);
+function tabFmt(code,v){
+  if(code==="PF"||code==="AF"||code==="AP"){return v<0.01?v.toFixed(5).replace(/^0/,""):v.toFixed(4).replace(/^0/,"")}
+  return v>=1000?v.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g," "):v.toFixed(3)
+}
+const money=v=>v.toLocaleString("en-US",{maximumFractionDigits:2,minimumFractionDigits:0});
+
+function cfd(d){
+  const W=680,H=230,L=40,R=40,Y=118,up=62,big=86;
+  const t0=d.start||0,t1=d.end;
+  const span=t1-t0, x=t=>L+(t-t0)*(W-L-R)/span;
+  const step=span<=12?1:Math.ceil(span/12);
+  const special=new Set();
+  (d.flows||[]).forEach(f=>special.add(f.t));
+  (d.series||[]).forEach(s=>{special.add(s.from);special.add(s.to)});
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cash flow diagram">`;
+  s+=`<line x1="${L-14}" y1="${Y}" x2="${W-R+14}" y2="${Y}" stroke="var(--ink)" stroke-width="1.5"/>`;
+  for(let t=t0;t<=t1;t++){
+        s+=`<line x1="${x(t)}" y1="${Y-4}" x2="${x(t)}" y2="${Y+4}" stroke="var(--ink)"/>`;
+  }
+  s+=`<text x="${L-14}" y="16" font-size="13" font-weight="600" fill="var(--muted)" font-family="IBM Plex Sans,sans-serif">i = ${d.i}</text>`;
+  const col=k=>k==="find"?"var(--find)":k==="in"?"var(--in)":"var(--out)";
+  const arrow=(t,dir,kind,len,label,showLabel=true)=>{
+    const c=col(kind),X=x(t),y2=dir==="up"?Y-len:Y+len,h=dir==="up"?7:-7;
+    let a=`<line x1="${X}" y1="${Y}" x2="${X}" y2="${y2}" stroke="${c}" stroke-width="2.4" ${kind==="find"?'stroke-dasharray="5 4"':''}/>`;
+    a+=`<path d="M${X-5} ${y2+h} L${X} ${y2} L${X+5} ${y2+h}" fill="none" stroke="${c}" stroke-width="2.4"/>`;
+    if(showLabel&&label){const ly=dir==="up"?y2-8:y2+16;a+=`<text x="${X}" y="${ly}" text-anchor="middle" font-size="13" font-weight="600" fill="${c}" font-family="IBM Plex Sans,sans-serif">${label}</text>`}
+    return a;
+  };
+  (d.series||[]).forEach(sr=>{
+    const len=sr.big?big:up;
+    for(let t=sr.from;t<=sr.to;t++)s+=arrow(t,sr.dir,sr.kind,len,"",false);
+    const mid=(x(sr.from)+x(sr.to))/2,yb=sr.dir==="up"?Y-len-12:Y+len+12;
+    const c=col(sr.kind);
+    s+=`<path d="M${x(sr.from)} ${yb+(sr.dir==="up"?4:-4)} L${x(sr.from)} ${yb} L${x(sr.to)} ${yb} L${x(sr.to)} ${yb+(sr.dir==="up"?4:-4)}" fill="none" stroke="${c}" stroke-width="1"/>`;
+    s+=`<text x="${mid}" y="${sr.dir==="up"?yb-6:yb+15}" text-anchor="middle" font-size="13" font-weight="600" fill="${c}" font-family="IBM Plex Sans,sans-serif">${sr.label}</text>`;
+  });
+  (d.flows||[]).forEach(f=>{s+=arrow(f.t,f.dir,f.kind,f.big?big:up,f.label)});
+  for(let t=t0;t<=t1;t++)if((t-t0)%step===0||t===t1||special.has(t))s+=`<text x="${x(t)}" y="${Y+20}" text-anchor="middle" font-size="12" fill="var(--muted)" stroke="var(--surface)" stroke-width="5" paint-order="stroke" font-family="IBM Plex Sans,sans-serif">${t}</text>`;
+  return s+"</svg>";
+}
+
+const chip=(code,i,n,shown)=>`<button class="chip" data-f="${code}" data-i="${i}" data-n="${n}">(${NAME[code]}, ${i}%, ${n}) = ${shown}</button>`;
+
+const SHEET1=[
+{q:1,stmt:"An engineer invests a $12,000 bonus now at 8% per year. What is it worth after 24 years? Use the tabulated factor, the formula, and a spreadsheet function.",
+ d:{end:24,i:"8%",flows:[{t:0,dir:"down",kind:"out",label:"P = 12,000"},{t:24,dir:"up",kind:"find",label:"F = ?",big:1}]},
+ steps:[
+ "Known: P = $12,000, i = 8%, n = 24. Want: F. That is “find F given P”, so the factor is F/P.",
+ `F = P(F/P, 8%, 24). Table: 8% page, row 24, column F/P → ${chip("FP",8,24,"6.341")}.`,
+ "F = 12,000 × 6.341 = <strong>$76,092</strong>.",
+ "Formula: F = 12,000 × (1.08)²⁴ = 12,000 × 6.34118 = $76,094.17.",
+ "Spreadsheet: <code>=FV(8%,24,,12000)</code> → −76,094.17 (Excel shows it negative because a deposit out means money back in)."
+ ],
+ ans:"F ≈ $76,092 (table) · $76,094 (formula / Excel). The gap is table rounding."},
+{q:2,stmt:"HP saved $50,000 in maintenance this year (year 0). At 20% per year: (a) equivalent value after 5 years; (b) equivalent value 3 years earlier.",
+ d:{start:-3,end:5,i:"20%",flows:[{t:0,dir:"up",kind:"in",label:"50,000"},{t:5,dir:"up",kind:"find",label:"F = ?",big:1},{t:-3,dir:"up",kind:"find",label:"P = ?"}]},
+ steps:[
+ `(a) Move $50,000 forward 5 years: F = 50,000 ${chip("FP",20,5,"2.488")} = <strong>$124,400</strong>. Formula: 50,000 × 1.2⁵ = $124,416.`,
+ "(b) “3 years earlier” means the $50,000 is the future amount and we want its value at year −3. Treat year −3 as “present”: find P given F with n = 3.",
+ `P = 50,000 ${chip("PF",20,3,".5787")} = <strong>$28,935</strong>. Formula: 50,000 / 1.2³ = $28,935.19.`
+ ],
+ ans:"(a) $124,400 · (b) $28,935"},
+{q:3,stmt:"How much should you pay now for $600 per year for 9 years, starting next year, at 16% per year?",
+ d:{end:9,i:"16%",series:[{from:1,to:9,dir:"up",kind:"in",label:"A = 600"}],flows:[{t:0,dir:"down",kind:"find",label:"P = ?",big:1}]},
+ steps:[
+ "Known: A = $600 for years 1–9, i = 16%. Want P at year 0 → factor P/A. The series starts at year 1, so P lands at year 0 directly.",
+ "16% has no table page. Option 1, interpolate between 15% and 18%:",
+ `${chip("PA",15,9,"4.772")} and ${chip("PA",18,9,"4.303")}. 16% is ⅓ of the way from 15 to 18 → 4.772 − ⅓(4.772 − 4.303) = 4.616. P ≈ 600 × 4.616 = $2,769.`,
+ "Option 2, exact formula: (P/A,16%,9) = (1.16⁹ − 1)/(0.16 × 1.16⁹) = 4.6065 → P = 600 × 4.6065 = <strong>$2,763.93</strong>.",
+ "Spreadsheet: <code>=PV(16%,9,600)</code> → −2,763.93."
+ ],
+ ans:"P ≈ $2,764 (formula). Interpolation from the tables gives ≈ $2,769, close enough to check your work."},
+{q:4,stmt:"Formasa Plastics invests $1 million per year for 8 years, starting 1 year from now, at 14% per year. What is the future worth?",
+ d:{end:8,i:"14%",series:[{from:1,to:8,dir:"down",kind:"out",label:"A = $1M"}],flows:[{t:8,dir:"up",kind:"find",label:"F = ?",big:1}]},
+ steps:[
+ "Known: A = $1,000,000, years 1–8, i = 14%. Want F at year 8 (lands on the last A) → factor F/A.",
+ `14% isn’t tabulated. Interpolate between ${chip("FA",12,8,"12.300")} and ${chip("FA",15,8,"13.727")}: 14 is ⅔ of the way → 12.300 + ⅔(1.427) = 13.251.`,
+ "Exact: (1.14⁸ − 1)/0.14 = 13.2328.",
+ "F = 1,000,000 × 13.2328 = <strong>$13.233 million</strong>. Excel: <code>=FV(14%,8,-1000000)</code>."
+ ],
+ ans:"F ≈ $13.23 million (interpolated: $13.25 million)"},
+{q:5,stmt:"How much must a contractor deposit every year, starting 1 year from now, at 5½% per year to have $6,000 seven years from now?",
+ d:{end:7,i:"5.5%",series:[{from:1,to:7,dir:"down",kind:"find",label:"A = ?"}],flows:[{t:7,dir:"up",kind:"in",label:"F = 6,000",big:1}]},
+ steps:[
+ "Known: F = $6,000 at year 7, i = 5.5%, n = 7. Want A → “find A given F” = sinking fund factor A/F.",
+ `5.5% sits exactly halfway between ${chip("AF",5,7,".1228")} and ${chip("AF",6,7,".1191")} → (0.1228 + 0.1191)/2 = 0.12095.`,
+ "Exact: 0.055 / (1.055⁷ − 1) = 0.12096.",
+ "A = 6,000 × 0.12096 = <strong>$725.79 per year</strong>. Excel: <code>=PMT(5.5%,7,,6000)</code>."
+ ],
+ ans:"A ≈ $725.8 per year"}
+];
+
+const SHEET2=[
+{q:1,stmt:"An investor deposits L.E. 400 now, L.E. 1,300 three years from now and L.E. 1,500 seven years after that. How much is in the account 10 years from now at 10%?",
+ d:{end:10,i:"10%",flows:[{t:0,dir:"down",kind:"out",label:"400"},{t:3,dir:"down",kind:"out",label:"1,300"},{t:10,dir:"down",kind:"out",label:"1,500"},{t:10,dir:"up",kind:"find",label:"F = ?",big:1}]},
+ steps:[
+ "Careful with “seven years thereafter”: 3 + 7 = year 10. So the last deposit is at year 10, the same moment we measure F.",
+ "Split into three single payments and move each to year 10 with F/P.",
+ `400 ${chip("FP",10,10,"2.594")} = 1,037.6`,
+ `1,300 ${chip("FP",10,7,"1.949")} = 2,533.7 (year 3 → 10 is 7 years)`,
+ "1,500 is already at year 10, so it adds as is.",
+ "F = 1,037.6 + 2,533.7 + 1,500 = <strong>L.E. 5,071.3</strong>"
+ ],
+ ans:"F₁₀ ≈ L.E. 5,071"},
+{q:4,stmt:"A utility expects savings of $15,000 per year for 3 years starting 2 years from now, then $25,000 per year for 4 more years. At 8%, find the equivalent annual worth.",
+ d:{end:8,i:"8%",series:[{from:2,to:4,dir:"up",kind:"in",label:"15,000"},{from:5,to:8,dir:"up",kind:"in",label:"25,000",big:1}],flows:[]},
+ steps:[
+ "The savings run from year 2 to year 8. We want one uniform A over years 1–8. Plan: bring everything to year 0 (P), then spread P over 8 years with A/P.",
+ `First series (years 2–4): P/A puts its value one year before the first payment, at year 1. Then move to year 0: 15,000 ${chip("PA",8,3,"2.577")} ${chip("PF",8,1,".9259")} = 35,791.`,
+ `Second series (years 5–8): P/A puts it at year 4, then move back 4 years: 25,000 ${chip("PA",8,4,"3.312")} ${chip("PF",8,4,".7350")} = 60,858.`,
+ "P = 35,791 + 60,858 = 96,649.",
+ `A = 96,649 ${chip("AP",8,8,".1740")} = <strong>$16,817 per year</strong>.`
+ ],
+ ans:"AW ≈ $16,817 per year (years 1–8). Formula gives $16,820."},
+{q:6,stmt:"A couple needs $2,000,000 in year 20 and already has $25,000 invested. (a) How much to invest each year at 10%? (b) If they can invest at most $40,000 per year, will they reach the goal?",
+ d:{end:20,i:"10%",series:[{from:1,to:20,dir:"down",kind:"find",label:"A = ?"}],flows:[{t:0,dir:"down",kind:"out",label:"25,000"},{t:20,dir:"up",kind:"in",label:"F = 2,000,000",big:1}]},
+ steps:[
+ `(a) The $25,000 already invested grows on its own: 25,000 ${chip("FP",10,20,"6.728")} = 168,200 at year 20.`,
+ "The yearly deposits only need to cover the rest: 2,000,000 − 168,200 = 1,831,800.",
+ `A = 1,831,800 ${chip("AF",10,20,".0175")} = <strong>$32,057 per year</strong> (formula: $31,983; table A/F is rounded to 4 places).`,
+ `(b) Check what $40,000 a year produces: 40,000 ${chip("FA",10,20,"57.275")} = 2,291,000. Add the 168,200 → 2,459,200.`,
+ "2,459,200 > 2,000,000 → <strong>yes, they reach the goal</strong> with about $459,000 to spare."
+ ],
+ ans:"(a) ≈ $32,000 per year · (b) Yes, $40,000/yr gives ≈ $2.46 million"},
+{q:8,stmt:"A vacation home costs $50,000 in 8 years. You deposit $10,000 today, $12,000 in two years, and $X in year 5, at 10%. Find X.",
+ d:{end:8,i:"10%",flows:[{t:0,dir:"down",kind:"out",label:"10,000"},{t:2,dir:"down",kind:"out",label:"12,000"},{t:5,dir:"down",kind:"find",label:"X = ?"},{t:8,dir:"up",kind:"in",label:"50,000",big:1}]},
+ steps:[
+ "Pick year 8 as the common point: everything deposited, grown to year 8, must equal $50,000.",
+ `10,000 ${chip("FP",10,8,"2.144")} = 21,440`,
+ `12,000 ${chip("FP",10,6,"1.772")} = 21,264 (year 2 → 8 is 6 years)`,
+ `X ${chip("FP",10,3,"1.331")} (year 5 → 8 is 3 years)`,
+ "21,440 + 21,264 + 1.331X = 50,000 → 1.331X = 7,296 → <strong>X = $5,482</strong>"
+ ],
+ ans:"X ≈ $5,482 (formula: $5,489)"},
+{q:10,stmt:"Employees invest LE 1,200 every year for 25 years, starting one year after employment. The company guarantees at least LE 50,000 at retirement. What is the rate of return?",
+ d:{end:25,i:"?",series:[{from:1,to:25,dir:"down",kind:"out",label:"A = 1,200"}],flows:[{t:25,dir:"up",kind:"in",label:"F = 50,000",big:1}]},
+ steps:[
+ "Known: A = 1,200, n = 25, F = 50,000. Unknown: i. Set up F = A(F/A, i, 25).",
+ "Solve for the factor: (F/A, i, 25) = 50,000 / 1,200 = 41.667.",
+ `Now search the tables, row 25, column F/A, for 41.667: ${chip("FA",4,25,"41.646")} is just below, ${chip("FA",4.5,25,"44.565")} is above.`,
+ "Interpolate for i: i = 4% + 0.5% × (41.667 − 41.646)/(44.565 − 41.646) = 4% + 0.5% × 0.0072 = 4.004%.",
+ "Excel check: <code>=RATE(25,-1200,0,50000)</code> → 4.004%."
+ ],
+ ans:"i ≈ 4.0% per year"}
+];
+
+function renderSheet(list,el,key){
+  el.innerHTML=list.map((p,k)=>`<article class="problem" id="${key}-q${p.q}">
+<header><span class="qnum">Q${p.q}</span><p class="stmt">${p.stmt}</p></header>
+<div class="cfd">${cfd(p.d)}</div>
+<button class="btn toggle" aria-expanded="false" aria-controls="${key}-s${k}">Show solution</button>
+<div class="sol" id="${key}-s${k}" hidden><ol class="steps">${p.steps.map(s=>`<li>${s}</li>`).join("")}</ol><div class="answer">${p.ans}</div></div>
+</article>`).join("");
+}
+renderSheet(SHEET1,document.getElementById("sheet1List"),"s1");
+renderSheet(SHEET2,document.getElementById("sheet2List"),"s2");
+document.getElementById("demoCfd").innerHTML=cfd({end:6,i:"8%",flows:[{t:0,dir:"down",kind:"out",label:"P = 800"},{t:2,dir:"down",kind:"out",label:"400"},{t:6,dir:"up",kind:"find",label:"F = ?",big:1}]});
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest(".toggle");
+  if(t){const s=document.getElementById(t.getAttribute("aria-controls"));const open=s.hidden;s.hidden=!open;t.setAttribute("aria-expanded",open);t.textContent=open?"Hide solution":"Show solution";return}
+  const sa=e.target.closest("[data-showall]");
+  if(sa){const v=document.getElementById("v-"+sa.dataset.showall);const btns=v.querySelectorAll(".toggle");const anyClosed=[...btns].some(b=>b.getAttribute("aria-expanded")==="false");btns.forEach(b=>{const s=document.getElementById(b.getAttribute("aria-controls"));s.hidden=!anyClosed;b.setAttribute("aria-expanded",anyClosed);b.textContent=anyClosed?"Hide solution":"Show solution"});sa.textContent=anyClosed?"Hide all solutions":"Show all solutions";return}
+  const c=e.target.closest(".chip");
+  if(c){document.getElementById("fFactor").value=c.dataset.f;document.getElementById("fI").value=c.dataset.i;document.getElementById("fN").value=c.dataset.n;finder();location.hash="tables";setTimeout(()=>document.getElementById("fOut").scrollIntoView({block:"center"}),30)}
+});
+
+function rowTable(rate,n,code){
+  return `<div class="scroll"><table class="tabrow"><tr><th>n</th>${ORDER.map(c=>`<th class="num">${NAME[c]}</th>`).join("")}</tr><tr><td>${n}</td>${ORDER.map(c=>`<td class="num${c===code?" hit":""}">${tabFmt(c,F[c](rate/100,n))}</td>`).join("")}</tr></table></div>`;
+}
+function finder(){
+  const code=document.getElementById("fFactor").value;
+  const ip=parseFloat(document.getElementById("fI").value),n=parseInt(document.getElementById("fN").value,10);
+  const out=document.getElementById("fOut");
+  if(!(ip>0)||!(n>=1)){out.innerHTML=`<p>Enter an interest rate above 0 and n of at least 1.</p>`;return}
+  const exact=F[code](ip/100,n);
+  const tab=RATES.includes(ip);
+  let h="";
+  if(tab){
+    const rows=ip<=2?N_LOW:N_HIGH;
+    const hasRow=rows.includes(n);
+    h+=`<div class="big">${tabFmt(code,exact)}</div><p>Open the <strong>${ip}% page</strong> → row <strong>n = ${n}</strong> → column <strong>${NAME[code]}</strong> (“find ${NAME[code][0]} given ${NAME[code][2]}”).</p>`;
+    h+=hasRow?`<p class="note">This is the row as printed in your table:</p>${rowTable(ip,n,code)}`:`<p class="note">n = ${n} isn’t printed on the ${ip}% page. Use the formula below or interpolate between the nearest rows.</p>`;
+  }else{
+    const lo=[...RATES].reverse().find(r=>r<ip),hi=RATES.find(r=>r>ip);
+    if(lo===undefined||hi===undefined){h+=`<div class="big">${exact.toFixed(4)}</div><p>${ip}% is outside the tables. Use the formula.</p>`}
+    else{
+      const fl=+tabFmt(code,F[code](lo/100,n)).replace(/ /g,""),fh=+tabFmt(code,F[code](hi/100,n)).replace(/ /g,"");
+      const frac=(ip-lo)/(hi-lo),est=fl+frac*(fh-fl);
+      h+=`<p><strong>${ip}% has no page.</strong> Use the two nearest pages, ${lo}% and ${hi}%.</p>`;
+      h+=`<div class="scroll"><table><tr><th>Rate</th><th class="num">(${NAME[code]}, i, ${n})</th></tr><tr><td>${lo}%</td><td class="num">${tabFmt(code,F[code](lo/100,n))}</td></tr><tr><td><strong>${ip}%</strong></td><td class="num"><strong>≈ ${est.toFixed(4)}</strong></td></tr><tr><td>${hi}%</td><td class="num">${tabFmt(code,F[code](hi/100,n))}</td></tr></table></div>`;
+      h+=`<p>${ip}% is ${(frac).toFixed(3)} of the way from ${lo}% to ${hi}%, so: ${fl} + ${frac.toFixed(3)} × (${fh} − ${fl}) ≈ <strong>${est.toFixed(4)}</strong></p>`;
+      h+=`<p>Exact value: <strong>${exact.toFixed(4)}</strong> (difference ${Math.abs(est-exact).toFixed(4)} comes from the curve bending between the two rates).</p>`;
+    }
+  }
+  h+=`<p class="note">Formula: (${NAME[code]}) = ${FORM[code]} = ${exact.toFixed(5)}</p>`;
+  out.innerHTML=h;
+}
+["fFactor","fI","fN"].forEach(id=>document.getElementById(id).addEventListener("input",finder));
+finder();
+
+const PL={L:{dl:.09,dm:.10,hr:.01,x:.01,y:0},M:{dl:.07,dm:.08,hr:.01,x:0,y:.01},N:{dl:.165,dm:.12,hr:.02,x:.0125,y:.0075}};
+function oh(){
+  const m=document.getElementById("ohMethod").value,TOH=97460;
+  const xr=(35910+10140)/2000,yr=(35910+15500)/2000;
+  const rates={dl:[TOH/32000,"per $1 of direct labor (97,460 ÷ 32,000)"],dm:[TOH/30800,"per $1 of direct material (97,460 ÷ 30,800)"],comp:[TOH/62800,"per $1 of DL + DM (97,460 ÷ 62,800)"],hr:[TOH/4000,"per direct labor hour (97,460 ÷ 4,000 hr)"]};
+  const per=p=>m==="dl"?rates.dl[0]*p.dl:m==="dm"?rates.dm[0]*p.dm:m==="comp"?rates.comp[0]*(p.dl+p.dm):m==="hr"?rates.hr[0]*p.hr:xr*p.x+yr*p.y;
+  document.getElementById("ohRate").innerHTML=m==="mach"?`Machine-specific OH: 71,820 shared OH split equally, plus each machine’s own cost. X = 35,910 + 10,140 = 46,050 → $${xr.toFixed(3)}/hr. Y = 35,910 + 15,500 = 51,410 → $${yr.toFixed(3)}/hr.`:`OH rate = <strong>${rates[m][0].toFixed(4)}</strong> ${rates[m][1]}`;
+  document.getElementById("ohTable").innerHTML=`<tr><th>Product</th><th class="num">DM / unit</th><th class="num">DL / unit</th><th class="num">OH / unit</th><th class="num">Total / unit</th></tr>`+Object.entries(PL).map(([k,p])=>{const o=per(p);return `<tr><td>${k}</td><td class="num">${p.dm.toFixed(3)}</td><td class="num">${p.dl.toFixed(3)}</td><td class="num">${o.toFixed(3)}</td><td class="num"><strong>${(o+p.dm+p.dl).toFixed(3)}</strong></td></tr>`}).join("");
+}
+document.getElementById("ohMethod").addEventListener("input",oh);oh();
+
+function be(){
+  const f=+document.getElementById("beF").value,v=+document.getElementById("beV").value,p=+document.getElementById("beP").value;
+  const out=document.getElementById("beOut"),svg=document.getElementById("beSvg");
+  if(!(p>v)){out.textContent="Price must be higher than the variable cost, otherwise every unit loses money and there is no break-even point.";svg.innerHTML="";return}
+  const n=f/(p-v);
+  out.innerHTML=`n* = ${money(f)} ÷ (${money(p)} − ${money(v)}) = <strong>${n.toFixed(2)}</strong> → you need <strong>${Math.ceil(n)}</strong> units to stop losing money.`;
+  const nm=Math.max(2,n*2),cm=p*nm,W=520,H=220,L=50,B=190,T=15,Rr=20;
+  const X=q=>L+q/nm*(W-L-Rr),Yc=c=>B-c/cm*(B-T);
+  svg.innerHTML=`<line x1="${L}" y1="${B}" x2="${W-Rr}" y2="${B}" stroke="var(--rule)"/><line x1="${L}" y1="${T}" x2="${L}" y2="${B}" stroke="var(--rule)"/>
+<line x1="${X(0)}" y1="${Yc(f)}" x2="${X(nm)}" y2="${Yc(f+v*nm)}" stroke="var(--out)" stroke-width="2.5"/>
+<line x1="${X(0)}" y1="${Yc(0)}" x2="${X(nm)}" y2="${Yc(p*nm)}" stroke="var(--in)" stroke-width="2.5"/>
+<line x1="${X(0)}" y1="${Yc(f)}" x2="${X(nm)}" y2="${Yc(f)}" stroke="var(--muted)" stroke-dasharray="4 4"/>
+<circle cx="${X(n)}" cy="${Yc(p*n)}" r="5" fill="var(--find)"/>
+<text x="${X(n)+8}" y="${Yc(p*n)+18}" font-size="12" fill="var(--find)" font-family="IBM Plex Sans,sans-serif">break-even</text>
+<text x="${X(nm)-4}" y="${Yc(p*nm)+14}" text-anchor="end" font-size="12" fill="var(--in)" font-family="IBM Plex Sans,sans-serif">Revenue</text>
+<text x="${X(nm)-4}" y="${Yc(f+v*nm)-6}" text-anchor="end" font-size="12" fill="var(--out)" font-family="IBM Plex Sans,sans-serif">Total cost</text>
+<text x="${L+4}" y="${Yc(f)-6}" font-size="12" fill="var(--muted)" font-family="IBM Plex Sans,sans-serif">Fixed cost</text>
+<text x="${(W+L)/2}" y="${B+20}" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="IBM Plex Sans,sans-serif">units n</text>`;
+}
+["beF","beV","beP"].forEach(id=>document.getElementById(id).addEventListener("input",be));be();
+
+const VIEWS=["ch1","ch2","ch3","tables","sheet1","sheet2"];
+const side=document.getElementById("side"),menuBtn=document.getElementById("menuBtn");
+function route(){
+  const h=location.hash.slice(1),v=VIEWS.includes(h)?h:"ch1";
+  VIEWS.forEach(k=>document.getElementById("v-"+k).hidden=k!==v);
+  side.querySelectorAll("a").forEach(a=>a.getAttribute("href")==="#"+v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+  document.getElementById("mobileTitle").textContent=document.getElementById("v-"+v).dataset.title;
+  side.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);route();
+menuBtn.addEventListener("click",()=>{const o=side.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)});
+</script>
+</body>
+</html>
