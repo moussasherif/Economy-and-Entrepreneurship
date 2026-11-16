@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,6 +78,7 @@ button,select,input{font:inherit;color:var(--ink)}
 .big{font-family:"Newsreader",Georgia,serif;font-size:2.2rem;font-weight:650;font-variant-numeric:tabular-nums}
 .tabrow td.hit{background:var(--findbg);outline:2px solid var(--find);outline-offset:-2px;font-weight:600}
 .note{font-size:.9rem;color:var(--muted)}
+details{margin-top:.6rem}summary{cursor:pointer;color:var(--accent);font-weight:500}
 .toolbar{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}
 .mobilebar{display:none}
 @media (max-width:860px){
@@ -95,16 +97,17 @@ button,select,input{font:inherit;color:var(--ink)}
 <div class="mobilebar"><button class="btn ghost" id="menuBtn" aria-controls="side" aria-expanded="false">Menu</button><strong id="mobileTitle">Engineering Economy</strong></div>
 <div class="layout">
 <nav class="side" id="side" aria-label="Sections">
-  <div class="brand">Engineering Economy<small>Chapters 1–3 and tutorial sheets</small></div>
+  <div class="brand">Engineering Economy<small>Chapters 1–4 and tutorial sheets</small></div>
   <div class="group">Chapters</div>
   <a href="#ch1">1. Introduction</a>
   <a href="#ch2">2. Cost accounting</a>
   <a href="#ch3">3. Time value of money</a>
+  <a href="#ch4">4. Gradient series</a>
   <div class="group">Tools</div>
   <a href="#tables">Using the interest tables</a>
   <div class="group">Solution manual</div>
   <a href="#sheet1">Sheet 1 · Q1–Q5</a>
-  <a href="#sheet2">Sheet 2 · Q1, 4, 6, 8, 10</a>
+  <a href="#sheet2">Sheet 2 · Q1–6, 8, 10</a>
 </nav>
 <main id="main">
 
@@ -284,6 +287,80 @@ Table: DM 40, DL 55, OH = 40 × 1.60 = 64 → TC = $159. Sold at $189 → profit
 <p class="note">Tap any highlighted factor to see exactly where it sits in the tables.</p>
 </section>
 
+<section class="view" id="v-ch4" data-title="4. Gradient series" hidden>
+<h1>Cash flows that grow or shrink every year</h1>
+<p class="lede">Real cash flows rarely stay flat. Maintenance creeps up, revenue drops as a well runs dry, a pension deposit gets bigger each year. A gradient series handles that pattern with one extra factor.</p>
+
+<h2>Two kinds of gradient</h2>
+<div class="scroll"><table>
+<tr><th>Type</th><th>Changes by</th><th>Example</th><th>Tool</th></tr>
+<tr><td>Uniform (arithmetic)</td><td>The same amount G every year</td><td>100, 150, 200, 250, 300 (G = +50) or 2000, 1900, 1800 (G = −100)</td><td>A/G and P/G columns in the tables</td></tr>
+<tr><td>Geometric</td><td>The same percentage g every year</td><td>1000, 1200, 1440, 1728 (g = 20%)</td><td>Modified rate g′ and the P/A formula</td></tr>
+</table></div>
+
+<h2>Uniform gradient: split it into two pieces</h2>
+<p>Year 1 is the base A<sub>1</sub>. Each year after adds G: year 2 = A<sub>1</sub> + G, year 3 = A<sub>1</sub> + 2G, … year n = A<sub>1</sub> + (n − 1)G.</p>
+<div class="analogy">Picture a staircase sitting on a flat platform. The platform is a normal uniform series, A<sub>1</sub> every year, which you already know how to price from Chapter 3. The staircase on top starts at zero in year 1 and climbs by G each year. Price the platform and the staircase separately, then add them.</div>
+<div class="scroll"><table>
+<tr><th>Year</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">…</th><th class="num">n</th></tr>
+<tr><td>Platform (base)</td><td class="num">A<sub>1</sub></td><td class="num">A<sub>1</sub></td><td class="num">A<sub>1</sub></td><td class="num">A<sub>1</sub></td><td class="num">…</td><td class="num">A<sub>1</sub></td></tr>
+<tr><td>Staircase (gradient)</td><td class="num">0</td><td class="num">G</td><td class="num">2G</td><td class="num">3G</td><td class="num">…</td><td class="num">(n−1)G</td></tr>
+<tr><th>Cash flow</th><th class="num">A<sub>1</sub></th><th class="num">A<sub>1</sub>+G</th><th class="num">A<sub>1</sub>+2G</th><th class="num">A<sub>1</sub>+3G</th><th class="num">…</th><th class="num">A<sub>1</sub>+(n−1)G</th></tr>
+</table></div>
+<div class="formula">A = A<sub>1</sub> + G(A/G, i, n)</div><br>
+<div class="formula">P = A<sub>1</sub>(P/A, i, n) + G(P/G, i, n)</div><br>
+<div class="formula">F = A(F/A, i, n)</div>
+<p>For a decreasing series use a minus sign: A = A<sub>1</sub> − G(A/G, i, n).</p>
+
+<h3>The rules that trip people up</h3>
+<ul>
+<li>The staircase is <strong>zero in year 1</strong>. The first G shows up in year 2.</li>
+<li>(P/G) puts the value <strong>two periods before the first G</strong>, which is one period before the base year. For a normal series starting at year 1, that is year 0.</li>
+<li>n counts every year of the series, including the zero year. Ten payments means n = 10, even though there are only nine increases.</li>
+<li>A/G and P/G are the last two columns on every table page.</li>
+<li>If the gradient starts later (Sheet 2 Q3), find where its zero year is. Its P lands one year before that.</li>
+</ul>
+
+<h2>Try it: split any gradient</h2>
+<div class="panel">
+<div class="form">
+<label>Base A₁ (year 1)<input type="number" id="gA1" value="3000"></label>
+<label>Change G per year<input type="number" id="gG" value="400"></label>
+<label>Interest i (%)<input type="number" id="gI" value="10" step="0.25" min="0.25"></label>
+<label>Years n<input type="number" id="gN" value="10" min="2" max="100"></label>
+</div>
+<div class="cfd" id="gCfd" style="padding:.6rem 0 0"></div>
+<div id="gOut"></div>
+<details><summary>Year‑by‑year split</summary><div class="scroll"><table id="gTable"></table></div></details>
+<p class="note">Defaults are the lecture’s $3,000 + $400 withdrawal example. Use a negative G for a decreasing series.</p>
+</div>
+
+<h2>Lecture examples, solved</h2>
+<div class="scroll"><table>
+<tr><th>Example</th><th>Setup</th><th class="num">Answer</th></tr>
+<tr><td>Deposit now to withdraw $3,000 at year 1, then 9 more withdrawals each $400 bigger, 10%</td><td>P = 3,000 <button class="chip" data-f="PA" data-i="10" data-n="10">(P/A,10%,10) = 6.145</button> + 400 <button class="chip" data-f="PG" data-i="10" data-n="10">(P/G,10%,10) = 22.891</button> = 18,435 + 9,156</td><td class="num">P ≈ $27,591</td></tr>
+<tr><td>Pension: $4,000 at year 1, +$100 each year for 19 more years, 10%. Balance at 55 (year 20)?</td><td>A = 4,000 + 100 <button class="chip" data-f="AG" data-i="10" data-n="20">(A/G,10%,20) = 6.508</button> = 4,650.8, then F = 4,650.8 <button class="chip" data-f="FA" data-i="10" data-n="20">(F/A,10%,20) = 57.275</button></td><td class="num">F ≈ $266,375</td></tr>
+<tr><td>$1,000 at year 1 growing 20% a year for 4 years, i = 25%</td><td>Geometric, see below</td><td class="num">P ≈ $3,013</td></tr>
+</table></div>
+
+<h2>Geometric gradient</h2>
+<p>Each cash flow is g percent bigger than the one before: A<sub>1</sub>, A<sub>1</sub>(1+g), A<sub>1</sub>(1+g)², … A<sub>1</sub>(1+g)<sup>n−1</sup>.</p>
+<div class="analogy">Rent going up by 500 a year climbs in a straight line. Rent going up 10% a year curves upward, because 10% of a bigger rent is a bigger raise. That curve is why geometric needs its own trick.</div>
+<p>The lecture’s trick: fold the growth into a modified interest rate g′ so the series behaves like a plain uniform series of A<sub>1</sub>/(1+g).</p>
+<div class="formula">g′ = (1 + i) / (1 + g) − 1</div><br>
+<div class="formula">P = A<sub>1</sub> / (1 + g) × (P/A, g′, n)</div>
+<div class="panel">
+<strong>Example.</strong> A<sub>1</sub> = 1,000, g = 20%, i = 25%, n = 4.
+<ol class="steps">
+<li>g′ = 1.25 / 1.20 − 1 = 0.04167 = 4.167%.</li>
+<li>(P/A, 4.167%, 4) isn’t printed. Interpolate between <button class="chip" data-f="PA" data-i="4" data-n="4">(P/A,4%,4) = 3.630</button> and <button class="chip" data-f="PA" data-i="4.5" data-n="4">(P/A,4.5%,4) = 3.588</button> → 3.616, or use the formula: 3.6157.</li>
+<li>P = 1,000 / 1.2 × 3.6157 = <strong>$3,013</strong>.</li>
+<li>Check by brute force: 1,000/1.25 + 1,200/1.25² + 1,440/1.25³ + 1,728/1.25⁴ = 800 + 768 + 737.28 + 707.79 = $3,013.07.</li>
+</ol>
+<p class="note">If g equals i, g′ is zero and the formula breaks. Then P = n × A<sub>1</sub> / (1 + i).</p>
+</div>
+</section>
+
 <section class="view" id="v-tables" data-title="Using the interest tables" hidden>
 <h1>Reading the compound interest tables</h1>
 <p class="lede">Each page of Appendix B is one interest rate. Every row is a number of periods n. Every column is one factor. Find three things and you have your number.</p>
@@ -336,8 +413,8 @@ Table: DM 40, DL 55, OH = 40 × 1.60 = 64 → TC = $159. Sold at $189 → profit
 </section>
 
 <section class="view" id="v-sheet2" data-title="Sheet 2" hidden>
-<h1>Sheet 2 solution manual · Q1, 4, 6, 8, 10</h1>
-<p class="lede">These mix several cash flows. The trick every time: move each piece to one common year, add, then convert.</p>
+<h1>Sheet 2 solution manual · Q1–6, 8, 10</h1>
+<p class="lede">These mix several cash flows. The trick every time: move each piece to one common year, add, then convert. Q2, Q3 and Q5 are gradient problems from Chapter 4.</p>
 <div class="legend"><span class="lg-in">Cash in / given</span><span class="lg-out">Cash out / given</span><span class="lg-find">Unknown</span></div>
 <div class="toolbar"><button class="btn ghost" data-showall="sheet2">Show all solutions</button></div>
 <div id="sheet2List"></div>
@@ -377,6 +454,7 @@ function cfd(d){
   const special=new Set();
   (d.flows||[]).forEach(f=>special.add(f.t));
   (d.series||[]).forEach(s=>{special.add(s.from);special.add(s.to)});
+  if(d.bars)Object.keys(d.bars.labels||{}).forEach(t=>special.add(+t));
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cash flow diagram">`;
   s+=`<line x1="${L-14}" y1="${Y}" x2="${W-R+14}" y2="${Y}" stroke="var(--ink)" stroke-width="1.5"/>`;
   for(let t=t0;t<=t1;t++){
@@ -399,6 +477,10 @@ function cfd(d){
     s+=`<path d="M${x(sr.from)} ${yb+(sr.dir==="up"?4:-4)} L${x(sr.from)} ${yb} L${x(sr.to)} ${yb} L${x(sr.to)} ${yb+(sr.dir==="up"?4:-4)}" fill="none" stroke="${c}" stroke-width="1"/>`;
     s+=`<text x="${mid}" y="${sr.dir==="up"?yb-6:yb+15}" text-anchor="middle" font-size="13" font-weight="600" fill="${c}" font-family="IBM Plex Sans,sans-serif">${sr.label}</text>`;
   });
+  if(d.bars){
+    const b=d.bars,mx=Math.max(...b.vals.map(Math.abs))||1;
+    b.vals.forEach((v,k)=>{if(!v)return;const t=b.from+k,pos=b.kind==="out"?v<0:v>=0;s+=arrow(t,pos?"up":"down",b.kind,14+56*Math.abs(v)/mx,(b.labels||{})[t]||"")});
+  }
   (d.flows||[]).forEach(f=>{s+=arrow(f.t,f.dir,f.kind,f.big?big:up,f.label)});
   for(let t=t0;t<=t1;t++)if((t-t0)%step===0||t===t1||special.has(t))s+=`<text x="${x(t)}" y="${Y+20}" text-anchor="middle" font-size="12" fill="var(--muted)" stroke="var(--surface)" stroke-width="5" paint-order="stroke" font-family="IBM Plex Sans,sans-serif">${t}</text>`;
   return s+"</svg>";
@@ -467,6 +549,29 @@ const SHEET2=[
  "F = 1,037.6 + 2,533.7 + 1,500 = <strong>L.E. 5,071.3</strong>"
  ],
  ans:"F₁₀ ≈ L.E. 5,071"},
+{q:2,stmt:"A start‑up car parts marketer expects advertising costs of $1,000,000 in year 1, decreasing by $100,000 each year. Income is $4,000,000 in year 1, increasing by $500,000 each year. Find the equivalent annual worth in years 1–5 of the net cash flow at 16% per year.",
+ d:{end:5,i:"16%",bars:{from:1,vals:[3,3.6,4.2,4.8,5.4],kind:"in",labels:{1:"3.0M",3:"4.2M",5:"5.4M"}}},
+ steps:[
+ "Combine income and expenses into one net cash flow first. Year 1: 4,000,000 − 1,000,000 = 3,000,000.",
+ "Each year income rises 500,000 and expenses fall 100,000, so the net rises by 600,000. Net flows: 3.0M, 3.6M, 4.2M, 4.8M, 5.4M. So A<sub>1</sub> = 3,000,000, G = +600,000, n = 5.",
+ "A = A<sub>1</sub> + G(A/G, 16%, 5).",
+ `16% has no page. Interpolate: ${chip("AG",15,5,"1.723")} and ${chip("AG",18,5,"1.673")}. 16% is ⅓ of the way → 1.723 − ⅓(0.050) = 1.7063. Exact formula: 1.7060.`,
+ "A = 3,000,000 + 600,000 × 1.7060 = <strong>$4,023,574 per year</strong> (interpolated: $4,023,780).",
+ "Same result if you keep them separate: [4,000,000 + 500,000(A/G)] − [1,000,000 − 100,000(A/G)]."
+ ],
+ ans:"AW ≈ $4.02 million per year"},
+{q:3,stmt:"A brackish aquifer generates desalted‑water revenue of $4.1 million per year for the first 4 years. After that, revenue drops by $50,000 each year until the aquifer is depleted in year 25. Find the present worth at 6% per year.",
+ d:{end:25,i:"6%",bars:{from:1,vals:Array.from({length:25},(_,k)=>k<4?4.1:4.1-0.05*(k-3)),kind:"in",labels:{1:"4.1M",25:"3.05M"}},flows:[{t:0,dir:"down",kind:"find",label:"P = ?",big:1}]},
+ steps:[
+ "Revenue: years 1–4 = 4.1M. Year 5 = 4.05M, year 6 = 4.0M, … year 25 = 4.1M − 21 × 50,000 = 3.05M.",
+ "Easiest split: pretend all 25 years pay the full 4.1M, then subtract what is lost. The loss is 0 in year 4, 50,000 in year 5, 100,000 in year 6, … 1,050,000 in year 25.",
+ "That loss is a pure gradient (G = 50,000) whose zero year is year 4. Count its years: 4 to 25 = 22 years, so n = 22. P/G puts its value one year before the zero year, at year 3.",
+ "PW = 4,100,000(P/A,6%,25) − 50,000(P/G,6%,22)(P/F,6%,3)",
+ `= 4,100,000 ${chip("PA",6,25,"12.783")} − 50,000 ${chip("PG",6,22,"98.941")} ${chip("PF",6,3,".8396")}`,
+ "= 52,410,300 − 4,153,543 = <strong>$48,256,757</strong>",
+ `Check with a different split: 4.1M ${chip("PA",6,4,"3.465")} + [4.05M ${chip("PA",6,21,"11.764")} − 50,000 ${chip("PG",6,21,"93.113")}] ${chip("PF",6,4,".7921")} = $48,257,731. Same answer within rounding.`
+ ],
+ ans:"PW ≈ $48.26 million (formula: $48,258,115)"},
 {q:4,stmt:"A utility expects savings of $15,000 per year for 3 years starting 2 years from now, then $25,000 per year for 4 more years. At 8%, find the equivalent annual worth.",
  d:{end:8,i:"8%",series:[{from:2,to:4,dir:"up",kind:"in",label:"15,000"},{from:5,to:8,dir:"up",kind:"in",label:"25,000",big:1}],flows:[]},
  steps:[
@@ -477,6 +582,15 @@ const SHEET2=[
  `A = 96,649 ${chip("AP",8,8,".1740")} = <strong>$16,817 per year</strong>.`
  ],
  ans:"AW ≈ $16,817 per year (years 1–8). Formula gives $16,820."},
+{q:5,stmt:"Heating and cooling costs at a Nippon Steel plant follow an arithmetic gradient. The cost is $550,000 now and increases by $40,000 each year through year 12. Find the equivalent annual worth in years 1–12 at 10% per year.",
+ d:{end:12,i:"10%",bars:{from:1,vals:Array.from({length:12},(_,k)=>550+40*k),kind:"out",labels:{1:"550k",12:"990k"}}},
+ steps:[
+ "Base A<sub>1</sub> = 550,000, G = 40,000 per year, n = 12. The textbook treats the $550,000 as the first cost in the series, so year 12 = 550,000 + 11 × 40,000 = 990,000.",
+ "Find A given G: A = A<sub>1</sub> + G(A/G, 10%, 12).",
+ `Table: 10% page, row 12, column A/G → ${chip("AG",10,12,"4.388")}.`,
+ "A = 550,000 + 40,000 × 4.388 = 550,000 + 175,520 = <strong>$725,520 per year</strong> (formula: $725,536)."
+ ],
+ ans:"AW ≈ $725,520 per year. If your instructor reads “now” as year 0, so year 1 is already $590,000, use A<sub>1</sub> = 590,000 → $765,536."},
 {q:6,stmt:"A couple needs $2,000,000 in year 20 and already has $25,000 invested. (a) How much to invest each year at 10%? (b) If they can invest at most $40,000 per year, will they reach the goal?",
  d:{end:20,i:"10%",series:[{from:1,to:20,dir:"down",kind:"find",label:"A = ?"}],flows:[{t:0,dir:"down",kind:"out",label:"25,000"},{t:20,dir:"up",kind:"in",label:"F = 2,000,000",big:1}]},
  steps:[
@@ -596,7 +710,26 @@ function be(){
 }
 ["beF","beV","beP"].forEach(id=>document.getElementById(id).addEventListener("input",be));be();
 
-const VIEWS=["ch1","ch2","ch3","tables","sheet1","sheet2"];
+const short=v=>{const a=Math.abs(v),s=v<0?"−":"";const t=x=>(+x.toFixed(2)).toString();return a>=1e6?s+t(a/1e6)+"M":a>=1e3?s+t(a/1e3)+"k":s+t(a)};
+function grad(){
+  const a1=+document.getElementById("gA1").value,g=+document.getElementById("gG").value,ip=+document.getElementById("gI").value,n=parseInt(document.getElementById("gN").value,10);
+  const out=document.getElementById("gOut"),cv=document.getElementById("gCfd"),tb=document.getElementById("gTable");
+  if(!(ip>0)||!(n>=2&&n<=100)){out.innerHTML="<p>Enter an interest rate above 0 and n between 2 and 100.</p>";cv.innerHTML="";tb.innerHTML="";return}
+  const i=ip/100,pa=F.PA(i,n),pg=F.PG(i,n),ag=F.AG(i,n),fa=F.FA(i,n);
+  const fac=(c,v)=>RATES.includes(ip)?chip(c,ip,n,tabFmt(c,v)):`(${NAME[c]}, ${ip}%, ${n}) = ${v.toFixed(4)}`;
+  const sg=g<0?"−":"+",ga=money(Math.abs(g)),r=v=>money(Math.round(v*100)/100);
+  const P=a1*pa+g*pg,A=a1+g*ag,Fv=A*fa;
+  const vals=Array.from({length:n},(_,k)=>a1+k*g);
+  out.innerHTML=`<p>P = ${money(a1)} ${fac("PA",pa)} ${sg} ${ga} ${fac("PG",pg)} = <strong>${r(P)}</strong> at year 0</p>
+<p>A = ${money(a1)} ${sg} ${ga} ${fac("AG",ag)} = <strong>${r(A)}</strong> every year 1–${n}</p>
+<p>F = ${r(A)} ${fac("FA",fa)} = <strong>${r(Fv)}</strong> at year ${n}</p>
+<p class="note">Results use exact factors. Table values are rounded, so a hand answer can differ slightly.</p>`;
+  cv.innerHTML=cfd({end:n,i:ip+"%",bars:{from:1,vals,kind:"in",labels:{1:short(vals[0]),[n]:short(vals[n-1])}}});
+  tb.innerHTML=`<tr><th>Year</th><th class="num">Base</th><th class="num">Gradient</th><th class="num">Cash flow</th></tr>`+vals.map((v,k)=>`<tr><td>${k+1}</td><td class="num">${money(a1)}</td><td class="num">${money(k*g)}</td><td class="num">${money(v)}</td></tr>`).join("");
+}
+["gA1","gG","gI","gN"].forEach(id=>document.getElementById(id).addEventListener("input",grad));grad();
+
+const VIEWS=["ch1","ch2","ch3","ch4","tables","sheet1","sheet2"];
 const side=document.getElementById("side"),menuBtn=document.getElementById("menuBtn");
 function route(){
   const h=location.hash.slice(1),v=VIEWS.includes(h)?h:"ch1";
@@ -611,3 +744,5 @@ menuBtn.addEventListener("click",()=>{const o=side.classList.toggle("open");menu
 </script>
 </body>
 </html>
+
+</body></html>
